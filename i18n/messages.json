@@ -1,0 +1,143 @@
+{
+	"pathTime" : "Time",
+
+	"pathMonth"    : "Time.Gregorian.Month",
+	"pathWeekDay"  : "Time.Gregorian.WeekDay",
+	"pathMeridiem" : "Time.Gregorian.Meridiem",
+
+	"labelsMonth"    : [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+	"labelsWeekDay"  : [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
+	"labelsMeridiem" : [ "AM", "PM" ],
+
+	"weekStartsAt" : 0,
+
+	"labelTimeZone"    : "Time Zone",
+	"labelDate"        : "Date",
+	"labelYear"        : "Year",
+	"labelMonth"       : "Month",
+	"labelDay"         : "Day",
+	"labelTime"        : "Time",
+	"labelHour"        : "Hour (24)",
+	"labelMinute"      : "Minute",
+	"labelSecond"      : "Second",
+	"labelMillisecond" : "Millisecond",
+
+	"nameTime" : "Time",
+	"leafTime" : "Time",
+
+	"nameGetCurrentTime"     : "Retrieving the current of time",
+	"mnemonicGetCurrentTime" : "GetCurrentTime",
+	"leafGetCurrentTime"     : "Get current time",
+
+	"nameCreateTime"     : "Creation of time",
+	"mnemonicCreateTime" : "CreateTime",
+	"childrenCreateTime" : [ "Time zone", "Year", "Month", "Day of month", "Hour (in 24-hour format)", "Minute", "Second", "Millisecond", "In daylight saving" ],
+	"leafCreateTime"     : "Create time",
+
+	"nameCreateTimeInTimeZone"     : "Creation of time in a time zone",
+	"mnemonicCreateTimeInTimeZone" : "CreateTimeInTimeZone",
+	"leafCreateTimeInTimeZone"     : "Create time in time zone",
+
+	"nameOffsetTime"     : "Offset of time",
+	"mnemonicOffsetTime" : "OffsetTime",
+	"childrenOffsetTime" : [
+		"The time of reference",  "Number of years to add",   "Number of months to add",  "Number of days to add",
+		"Number of hours to add", "Number of minutes to add", "Number of seconds to add", "Number of milliseconds to add"
+	],
+	"leafOffsetTime"     : "Offset time",
+
+	"pathTimeGregorian" : "Time.Gregorian",
+
+	"mnemonicGetValues" : "GetValues",
+	"nameGetValues"     : "Retrieving values of a time",
+	"leafGetValues"     : "Get values",
+
+	"mnemonicGetYear" : "GetYear",
+	"nameGetYear"     : "Retrieving the year of a time",
+	"leafGetYear"     : "Get year",
+
+	"mnemonicGetMonth" : "GetMonth",
+	"nameGetMonth"     : "Retrieving the month of a time",
+	"leafGetMonth"     : "Get month",
+
+	"mnemonicGetDayOfMonth" : "GetDayOfMonth",
+	"nameGetDayOfMonth"     : "Retrieving the day of month of a time",
+	"leafGetDayOfMonth"     : "Get day of month",
+
+	"mnemonicGetDayOfYear" : "GetDayOfYear",
+	"nameGetDayOfYear"     : "Retrieving the day of year of a time",
+	"leafGetDayOfYear"     : "Get day of year",
+
+	"mnemonicGetWeekDay" : "GetWeekDay",
+	"nameGetWeekDay"     : "Retrieving the week of day of a time",
+	"leafGetWeekDay"     : "Get week day",
+
+	"mnemonicGetHour12" : "GetHour12",
+	"nameGetHour12"     : "Retrieving the hour (12) of a time",
+	"leafGetHour12"     : "Get hour 12",
+
+	"mnemonicGetMeridiem" : "GetMeridiem",
+	"nameGetMeridiem"     : "Retrieving the meridiem of a time",
+	"leafGetMeridiem"     : "Get meridiem",
+
+	"mnemonicGetHour24" : "GetHour24",
+	"nameGetHour24"     : "Retrieving the hour (24) of a time",
+	"leafGetHour24"     : "Get hour (24)",
+
+	"mnemonicGetMinute" : "GetMinute",
+	"nameGetMinute"     : "Retrieving the minute of a time",
+	"leafGetMinute"     : "Get minute",
+
+	"mnemonicGetSecond" : "GetSecond",
+	"nameGetSecond"     : "Retrieving the second of a time",
+	"leafGetSecond"     : "Get second",
+
+	"mnemonicGetMillisecond" : "GetMillisecond",
+	"nameGetMillisecond"     : "Retrieving the millisecond of a time",
+	"leafGetMillisecond"     : "Get millisecond",
+
+	"mnemonicInDayLightSaving" : "InDayLightSaving",
+	"nameInDayLightSaving"     : "Retrieving if a time is in daylight saving",
+	"leafInDayLightSaving"     : "Is in daylight saving",
+
+	"mnemonicGetZoneOffset" : "GetZoneOffset",
+	"nameGetZoneOffset"     : "Retrieving the zone offset of a time",
+	"leafGetZoneOffset"     : "Get zone offset",
+
+	"mnemonicGetDayLightSavingOffset" : "GetDayLightSavingOffset",
+	"nameGetDayLightSavingOffset"     : "Retrieving the daylight saving offset of a time",
+	"leafGetDayLightSavingOffset"     : "Get daylight saving offset",
+
+	"mnemonicTimer" : "Timer",
+	"nameTimer"     : "Time measurement",
+	"childTimer"    : "Expression to measure execution",
+	"leafTimer"     : "Timer",
+
+	"mnemonicToTime" : "ToTime",
+	"nameToTime"     : "Conversion to time",
+	"childToTime"    : "Expression to convert to time",
+	"leafToTime"     : "To time",
+
+	"pathFormatTime" : "Localization.Format.Time.Gregorian",
+
+	"mnemonicMonthName" : "MonthName",
+	"nameMonthName"     : "Retrieving name of the month",
+	"leafMonthName"     : "Month name",
+
+	"mnemonicWeekDayName" : "WeekDayName",
+	"nameWeekDayName"     : "Retrieving name of the weekday",
+	"leafWeekDayName"     : "Weekday name",
+
+	"mnemonicFormatTimeShort" : "FormatTimeShort",
+	"nameFormatTimeShort"     : "Format a time in short format",
+	"leafFormatTimeShort"     : "Format time (short)",
+
+	"mnemonicFormatTimeMedium" : "FormatTimeMedium",
+	"nameFormatTimeMedium"     : "Format a time in medium format",
+	"leafFormatTimeMedium"     : "Format time (medium)",
+
+	"mnemonicFormatTimeLong" : "FormatTimeLong",
+	"nameFormatTimeLong"     : "Format a time in long format",
+	"leafFormatTimeLong"     : "Format time (long)"
+}
+

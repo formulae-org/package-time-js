@@ -1,0 +1,143 @@
+{
+	"pathTime" : "Tiempo",
+
+	"pathMonth"    : "Tiempo.Calendario gregoriano.Mes",
+	"pathWeekDay"  : "Tiempo.Calendario gregoriano.Día de la semana",
+	"pathMeridiem" : "Tiempo.Calendario gregoriano.Meridiano",
+
+	"labelsMonth"    : [ "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre" ],
+	"labelsWeekDay"  : [ "domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado" ],
+	"labelsMeridiem" : [ "AM", "PM" ],
+
+	"weekStartsAt" : 0,
+
+	"labelTimeZone"    : "Huso horario",
+	"labelDate"        : "Fecha",
+	"labelYear"        : "Año",
+	"labelMonth"       : "Mes",
+	"labelDay"         : "Día",
+	"labelTime"        : "Hora",
+	"labelHour"        : "Hora (24)",
+	"labelMinute"      : "Minuto",
+	"labelSecond"      : "Segundo",
+	"labelMillisecond" : "Milisegundo",
+
+	"nameTime" : "Tiempo",
+	"leafTime" : "Tiempo",
+
+	"nameGetCurrentTime"     : "Obtención del tiempo actual",
+	"mnemonicGetCurrentTime" : "ObtenerTiempoActual",
+	"leafGetCurrentTime"     : "Obtener tiempo actual",
+
+	"nameCreateTime"     : "Creación de tiempo",
+	"mnemonicCreateTime" : "CrearTiempo",
+	"childrenCreateTime" : [ "Huso horario", "Año", "Mes", "Día el mes", "Hora (formato 24 horas)", "Minuto", "Seguno", "Milisegundo", "En horario de verano" ],
+	"leafCreateTime"     : "Crear tiempo",
+
+	"nameCreateTimeInTimeZone"     : "Creación de tiempo en huso horario",
+	"mnemonicCreateTimeInTimeZone" : "CrearTiempoEnHusoHorarioe",
+	"leafCreateTimeInTimeZone"     : "Crear tiempo en huso horario",
+
+	"nameOffsetTime"     : "Desplazamiento de tiempo",
+	"mnemonicOffsetTime" : "DesplazarTiempo",
+	"childrenOffsetTime" : [
+		"Tiempo de referencia",     "Número de años a añadir",    "Número de meses a añadir",    "Número de días a añadir",
+		"Número de horas a añadir", "Número de minutos a añadir", "Número de segundos a añadir", "Número de milisegunos a añadir"
+	],
+	"leafOffsetTime"     : "Desplazar tiempo",
+
+	"pathTimeGregorian" : "Tiempo.Calendario gregoriano",
+
+	"mnemonicGetValues" : "ObtenerValores",
+	"nameGetValues"     : "Obtención de valores de tiempo",
+	"leafGetValues"     : "Obtener valores",
+
+	"mnemonicGetYear" : "ObtenerAño",
+	"nameGetYear"     : "Obtener año",
+	"leafGetYear"     : "Obtener año",
+
+	"mnemonicGetMonth" : "ObtenerMes",
+	"nameGetMonth"     : "Obtener mes",
+	"leafGetMonth"     : "Obtener mes",
+
+	"mnemonicGetDayOfMonth" : "ObtenerDíaMes",
+	"nameGetDayOfMonth"     : "Obtener día del mes",
+	"leafGetDayOfMonth"     : "Obtener día del mes",
+
+	"mnemonicGetDayOfYear" : "ObtenerDíaAño",
+	"nameGetDayOfYear"     : "Obtener día del año",
+	"leafGetDayOfYear"     : "Obtener día del año",
+
+	"mnemonicGetWeekDay" : "ObtenerDíaSemana",
+	"nameGetWeekDay"     : "Obtener día de la semana",
+	"leafGetWeekDay"     : "Obtener día de la semana",
+
+	"mnemonicGetHour12" : "ObtenerHora12",
+	"nameGetHour12"     : "Obtener hora (formato de 12 horas)",
+	"leafGetHour12"     : "Obtener hora (formato de 12 horas)",
+
+	"mnemonicGetMeridiem" : "ObtenerMeridiano",
+	"nameGetMeridiem"     : "Obtener meridiano",
+	"leafGetMeridiem"     : "Obtener meridiano",
+
+	"mnemonicGetHour24" : "ObtenerHora24",
+	"nameGetHour24"     : "Obtener hora (formato de 24 horas)",
+	"leafGetHour24"     : "Obtener hora (formato de 24 horas)",
+
+	"mnemonicGetMinute" : "ObtenerMinuto",
+	"nameGetMinute"     : "Obtener minuto",
+	"leafGetMinute"     : "Obtener minuto",
+
+	"mnemonicGetSecond" : "ObtenerSegundo",
+	"nameGetSecond"     : "Obtener segundo",
+	"leafGetSecond"     : "Obtener segundo",
+
+	"mnemonicGetMillisecond" : "ObtenerMilisegundo",
+	"nameGetMillisecond"     : "Obtener milisegundo",
+	"leafGetMillisecond"     : "Obtener milisegundo",
+
+	"mnemonicInDayLightSaving" : "¿EnHorarioVerano?",
+	"nameInDayLightSaving"     : "¿En horario de verano?",
+	"leafInDayLightSaving"     : "¿En horario de verano?",
+
+	"mnemonicGetZoneOffset" : "ObtenerHusoHorario",
+	"nameGetZoneOffset"     : "Obtener huso horario",
+	"leafGetZoneOffset"     : "Obtener huso horario",
+
+	"mnemonicGetDayLightSavingOffset" : "ObtenerDesplazamientoHorarioVerano",
+	"nameGetDayLightSavingOffset"     : "Obtener desplazamiento en horario de verano",
+	"leafGetDayLightSavingOffset"     : "Obtener desplazamiento en horario de verano",
+
+	"mnemonicTimer" : "Temporizador",
+	"nameTimer"     : "Temporizador",
+	"childTimer"    : "Expresión a medir tiempo de ejecición",
+	"leafTimer"     : "Temporizador",
+
+	"mnemonicToTime" : "Tiempo",
+	"nameToTime"     : "Conversión a tiempo",
+	"childToTime"    : "Expresión a convertir",
+	"leafToTime"     : "Conversión a tiempo",
+
+	"pathFormatTime" : "Localización.Formato.Tiempo.Calendario gregoriano",
+
+	"mnemonicMonthName" : "NombreMes",
+	"nameMonthName"     : "Obtención del nombre de mes",
+	"leafMonthName"     : "Nombre de mes",
+
+	"mnemonicWeekDayName" : "NombreDíaSemana",
+	"nameWeekDayName"     : "Obtención del nombre del día de la semana",
+	"leafWeekDayName"     : "Nombre del día de la semana",
+
+	"mnemonicFormatTimeShort" : "FormatearTiempoCorto",
+	"nameFormatTimeShort"     : "Formatear tiempo (corto)",
+	"leafFormatTimeShort"     : "Formatear tiempo (corto)",
+
+	"mnemonicFormatTimeMedium" : "FormatearTiempoMediano",
+	"nameFormatTimeMedium"     : "Formatear tiempo (mediano)",
+	"leafFormatTimeMedium"     : "Formatear tiempo (mediano)",
+
+	"mnemonicFormatTimeLong" : "FormatearTiempoLargo",
+	"nameFormatTimeLong"     : "Formatear tiempo (largo)",
+	"leafFormatTimeLong"     : "Formatear tiempo (largo)"
+}
+
