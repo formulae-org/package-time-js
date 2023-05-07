@@ -103,13 +103,11 @@ Time.Time = class extends Expression.NullaryExpression {
 		let timex = new Date(millis + 15811200000);
 		let inDST = time.getTimezoneOffset() > timex.getTimezoneOffset();
 
-		if (inDST && false) {
+		if (inDST) {
 			return time.toLocaleString(Formulae.locale, options) + "☀️";
-			//return time.toLocaleString("en-US", options) + "☀️";
 		}
 		else {
 			return time.toLocaleString(Formulae.locale, options);
-			//return time.toLocaleString("en-US", options);
 		}
 		
 		/*
