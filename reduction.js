@@ -51,5 +51,5 @@ Time.compare = async (compare, session) => {
 
 Time.setReducers = () => {
 	ReductionManager.addReducer("Time.GetCurrentTime", Time.GetCurrentTime);
-	ReductionManager.addReducer("Relation.Compare", Time.compare);
+	ReductionManager.addReducer("Relation.Compare",    Time.compare);
 };
