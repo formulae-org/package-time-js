@@ -20,11 +20,126 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 export class Time extends Formulae.Package {}
 
-Time.GetCurrentTime = async (getCurrentTime, session) => {
+Time.getCurrentTime = async (getCurrentTime, session) => {
 	let timeExpression = Formulae.createExpression("Time.Time");
 	timeExpression.set("Value", Date.now());
 	
 	getCurrentTime.replaceBy(timeExpression);
+	return true;
+};
+
+Time.createTime = async (createTime, session) => {
+	let year = CanonicalArithmetic.getInteger(createTime.children[0]);
+	if (year === undefined) { return false; }
+	
+	let month;
+	{
+		let tag = createTime.children[1].getTag();
+		if (tag.startsWith("Time.Gregorian.Month.")) {
+			month = FormulaeTime.mapMonthTags[tag.substring(21)];
+		}
+		else {
+			month = CanonicalArithmetic.getInteger(createTime.children[1]);
+		if (month === undefined) { return false; }
+		}
+	}
+	
+	let day = CanonicalArithmetic.getInteger(createTime.children[2]);
+	if (day === undefined) { return false; }
+	
+	let hour = 0;
+	if (createTime.children.length >= 4) {
+		hour = CanonicalArithmetic.getInteger(createTime.children[3]);
+		if (hour === undefined) { return false; }
+	}
+	
+	let minute = 0;
+	if (createTime.children.length >= 5) {
+		minute = CanonicalArithmetic.getInteger(createTime.children[4]);
+		if (minute === undefined) { return false; }
+	}
+	
+	let second = 0;
+	if (createTime.children.length >= 6) {
+		second = CanonicalArithmetic.getInteger(createTime.children[5]);
+		if (second === undefined) { return false; }
+	}
+	
+	let milliSecond = 0;
+	if (createTime.children.length >= 7) {
+		milliSecond = CanonicalArithmetic.getInteger(createTime.children[6]);
+		if (milliSecond === undefined) { return false; }
+	}
+	
+	let result = Formulae.createExpression("Time.Time");
+	try {
+		result.set("Value", FormulaeTime.createMillis(year, month, day, hour, minute, second, milliSecond, Formulae.timeZone, 0));
+	}
+	catch (error) {
+		ReductionManager.setInError(createTime, error);
+		throw new ReductionError();
+	}
+	
+	createTime.replaceBy(result);
+	return true;
+};
+
+Time.createTimeInTimeZone = async (createTime, session) => {
+	let timeZone = createTime.children[0];
+	if (timeZone.getTag() !== "String.String") return false;
+	
+	let year = CanonicalArithmetic.getInteger(createTime.children[1]);
+	if (year === undefined) { return false; }
+	
+	let month;
+	{
+		let tag = createTime.children[2].getTag();
+		if (tag.startsWith("Time.Gregorian.Month.")) {
+			month = FormulaeTime.mapMonthTags[tag.substring(21)];
+		}
+		else {
+			month = CanonicalArithmetic.getInteger(createTime.children[2]);
+		if (month === undefined) { return false; }
+		}
+	}
+	
+	let day = CanonicalArithmetic.getInteger(createTime.children[3]);
+	if (day === undefined) { return false; }
+	
+	let hour = 0;
+	if (createTime.children.length >= 5) {
+		hour = CanonicalArithmetic.getInteger(createTime.children[4]);
+		if (hour === undefined) { return false; }
+	}
+	
+	let minute = 0;
+	if (createTime.children.length >= 6) {
+		minute = CanonicalArithmetic.getInteger(createTime.children[5]);
+		if (minute === undefined) { return false; }
+	}
+	
+	let second = 0;
+	if (createTime.children.length >= 7) {
+		second = CanonicalArithmetic.getInteger(createTime.children[6]);
+		if (second === undefined) { return false; }
+	}
+	
+	let milliSecond = 0;
+	if (createTime.children.length >= 8) {
+		milliSecond = CanonicalArithmetic.getInteger(createTime.children[7]);
+		if (milliSecond === undefined) { return false; }
+	}
+	
+	let result = Formulae.createExpression("Time.Time");
+	try {
+		result.set("Value", FormulaeTime.createMillis(year, month, day, hour, minute, second, milliSecond, timeZone.get("Value"), 0));
+	}
+	catch (error) {
+		ReductionManager.setInError(createTime, error);
+		throw new ReductionError();
+	}
+	
+	createTime.replaceBy(result);
 	return true;
 };
 
@@ -49,7 +164,269 @@ Time.compare = async (compare, session) => {
 	}
 };
 
+Time.addition = async (offset, session) => {
+	if (offset.children.length !== 2) return false;
+	if (offset.children[0].getTag() !== "Time.Time") return false;
+	let o = CanonicalArithmetic.getInteger(offset.children[1]);
+	if (o === undefined) return false;
+	
+	let result = Formulae.createExpression("Time.Time");
+	result.set("Value", offset.children[0].get("Value") + o);
+	
+	offset.replaceBy(result);
+	return true;
+};
+
+Time.getComponent = async (getComponent, session) => {
+	let timeExpression = getComponent.children[0];
+	if (timeExpression.getTag() !== "Time.Time") return false;
+	
+	let timeZone = Formulae.timeZone;
+	if (getComponent.children.length >= 2) {
+		let str = getComponent.children[1];
+		if (str.getTag() !== "String.String") return false;
+		timeZone = str.get("Value");
+	}
+	
+	let millis = timeExpression.get("Value");
+	let components = FormulaeTime.getComponents(millis, timeZone);
+	let result;
+	
+	switch (getComponent.getTag()) {
+		case "Time.Gregorian.GetYear":
+			result = CanonicalArithmetic.number2Expr(components.year);
+			break;
+		
+		case "Time.Gregorian.GetMonth":
+			result = Formulae.createExpression("Time.Gregorian.Month." + FormulaeTime.monthTags[components.month - 1]);
+			break;
+		
+		case "Time.Gregorian.GetMonthNumber":
+			result = CanonicalArithmetic.number2Expr(components.month);
+			break;
+		
+		case "Time.Gregorian.GetDay":
+			result = CanonicalArithmetic.number2Expr(components.day);
+			break;
+		
+		case "Time.Gregorian.GetWeekDay":
+			result = Formulae.createExpression("Time.Gregorian.WeekDay." + FormulaeTime.weekDayTags[components.weekDay]);
+			break;
+			
+		case "Time.Gregorian.GetHour":
+			result = CanonicalArithmetic.number2Expr(components.hour);
+			break;
+			
+		case "Time.Gregorian.GetMinute":
+			result = CanonicalArithmetic.number2Expr(components.minute);
+			break;
+		
+		case "Time.Gregorian.GetSecond":
+			result = CanonicalArithmetic.number2Expr(components.second);
+			break;
+		
+		case "Time.Gregorian.GetMillisecond":
+			result = CanonicalArithmetic.number2Expr(components.millisecond);
+			break;
+			
+		case "Time.Gregorian.GetTimeZoneOffset":
+			result = CanonicalArithmetic.number2Expr(components.offset);
+			break;
+		
+		case "Time.Gregorian.InDaylightSavingTime":
+			result = Formulae.createExpression(
+				FormulaeTime.inDaylightSavingTime(millis, timeZone) ?
+				"Logic.True" :
+				"Logic.False"
+			);
+			break;
+	}
+	
+	getComponent.replaceBy(result);
+	return true;
+};
+
+Time.FormatOptions = class extends CanonicalOptions {
+	constructor() {
+		super();
+		this.locale = Formulae.locale;
+		this.timeZone = Formulae.timeZone;
+		this.dateStyle = "full";
+		this.timeStyle = "full";
+	}
+	
+	checkOption(tag, option) {
+		let name = option.children[0].get("Value").toLowerCase();
+		let value = option.children[1];
+		
+		switch (name) {
+			case "locale": {
+				if (value.getTag() !== "String.String") {
+					ReductionManager.setInError(value, "Value must be a string");
+					return false;
+				}
+				
+				this.locale = value.get("Value");
+				return true;
+			}
+			
+			case "timezone": {
+				if (value.getTag() !== "String.String") {
+					ReductionManager.setInError(value, "Value must be a string");
+					return false;
+				}
+				
+				this.timeZone = value.get("Value");
+				return true;
+			}
+			
+			case "datestyle": {
+				if (value.getTag() !== "String.String") {
+					ReductionManager.setInError(value, "Value is not a string");
+					return false;
+				}
+				
+				let s = value.get("Value").toLowerCase();
+				
+				switch (s) {
+					case "none":
+					case "short":
+					case "medium":
+					case "long":
+					case "full":
+						this.dateStyle = s;
+						return true;
+					
+					default:
+						ReductionManager.setInError(value, "Invalid option");
+						return false;
+				}
+			}
+			
+			case "timestyle": {
+				if (value.getTag() !== "String.String") {
+					ReductionManager.setInError(value, "Value is not a string");
+					return false;
+				}
+				
+				let s = value.get("Value").toLowerCase();
+				
+				switch (s) {
+					case "none":
+					case "short":
+					case "medium":
+					case "long":
+					case "full":
+						this.timeStyle = s;
+						return true;
+					
+					default:
+						ReductionManager.setInError(value, "Invalid option");
+						return false;
+				}
+			}
+		}
+		
+		ReductionManager.setInError(option.children[0], "Unknown option");
+		return false;
+	}
+}
+
+Time.formatTime = async (formatTime, session) => {
+	let tag = formatTime.getTag();
+	
+	let timeExpression = formatTime.children[0];
+	if (timeExpression.getTag() !== "Time.Time") return false;
+	
+	let optionsExpr = formatTime.children[1];
+	let formatOptions = new Time.FormatOptions();
+	if (optionsExpr !== undefined && !formatOptions.checkOptions(tag, optionsExpr)) {
+		return false;
+	}	
+	
+	let options = {	timeZone: formatOptions.timeZone };
+	if (formatOptions.dateStyle !== "none") options.dateStyle = formatOptions.dateStyle;
+	if (formatOptions.timeStyle !== "none") options.timeStyle = formatOptions.timeStyle;
+	
+	let result = Formulae.createExpression("String.String");
+	try {
+		result.set("Value", new Date(timeExpression.get("Value")).toLocaleString(formatOptions.locale, options));
+	}
+	catch (error) {
+		ReductionManager.setInError(formatTime, error);
+		throw new ReductionError();
+	}
+	
+	if (formatOptions.dateStyle === "none" && formatOptions.timeStyle === "none") {
+		result.set("Value", "");
+	}
+	
+	formatTime.replaceBy(result);
+	return true;
+};
+
+
+Time.toNumber = async (toNumber, session) => {
+	if (toNumber.children[0].getTag() !== "Time.Time") return false;
+	if (toNumber.children.lengh > 1) return false;
+	
+	let result = CanonicalArithmetic.number2Expr(toNumber.children[0].get("Value"));
+	toNumber.replaceBy(result);
+	return true;
+};
+
+/*
+Time.toTime = async (toTime, session) => {
+	CanonicalArithmetic.getInteger(createTime.children[4]);
+	if (millis === undefined) return false;
+	
+	let result = Formulae.createExpression("Time.Time");
+	result.set("Value", millis);
+	
+	toTime.replaceBy(result);
+	return true;
+};
+*/
+
+Time.timer = async (timer, session) => {
+	let start = Date.now();
+	await session.reduce(timer.children[0]);
+	let end = Date.now();
+	
+	let result = Formulae.createExpression("List.List");
+	result.addChild(CanonicalArithmetic.number2Expr(end - start));
+	result.addChild(timer.children[0]);
+	
+	timer.replaceBy(result);
+	return true;
+};
+
 Time.setReducers = () => {
-	ReductionManager.addReducer("Time.GetCurrentTime", Time.GetCurrentTime);
-	ReductionManager.addReducer("Relation.Compare",    Time.compare);
+	ReductionManager.addReducer("Time.GetCurrentTime", Time.getCurrentTime);
+	
+	ReductionManager.addReducer("Time.CreateTime",           Time.createTime);
+	ReductionManager.addReducer("Time.CreateTimeInTimeZone", Time.createTimeInTimeZone);
+	
+	ReductionManager.addReducer("Relation.Compare", Time.compare);
+	
+	ReductionManager.addReducer("Math.Arithmetic.Addition", Time.addition);
+	
+	ReductionManager.addReducer("Time.Gregorian.GetYear",              Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetMonth",             Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetMonthNumber",       Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetDay",               Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetWeekDay",           Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetHour",              Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetMinute",            Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetSecond",            Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetMillisecond",       Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetTimeZoneOffset",    Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.InDaylightSavingTime", Time.getComponent);
+	
+	ReductionManager.addReducer("Localization.Format.Time.Gregorian.FormatTime", Time.formatTime);
+	
+	ReductionManager.addReducer("Math.Arithmetic.ToNumber", Time.toNumber);
+	//ReductionManager.addReducer("Time.ToTime",              Time.toTime);
+	
+	ReductionManager.addReducer("Time.Timer", Time.timer, { special: true });
 };
