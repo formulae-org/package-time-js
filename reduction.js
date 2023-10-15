@@ -402,31 +402,31 @@ Time.timer = async (timer, session) => {
 };
 
 Time.setReducers = () => {
-	ReductionManager.addReducer("Time.GetCurrentTime", Time.getCurrentTime);
+	ReductionManager.addReducer("Time.GetCurrentTime", Time.getCurrentTime, "Time.getCurrentTime");
 	
-	ReductionManager.addReducer("Time.CreateTime",           Time.createTime);
-	ReductionManager.addReducer("Time.CreateTimeInTimeZone", Time.createTimeInTimeZone);
+	ReductionManager.addReducer("Time.CreateTime",           Time.createTime,           "Time.createTime");
+	ReductionManager.addReducer("Time.CreateTimeInTimeZone", Time.createTimeInTimeZone, "Time.createTimeInTimeZone");
 	
-	ReductionManager.addReducer("Relation.Compare", Time.compare);
+	ReductionManager.addReducer("Relation.Compare", Time.compare, "Time.compare");
 	
-	ReductionManager.addReducer("Math.Arithmetic.Addition", Time.addition);
+	ReductionManager.addReducer("Math.Arithmetic.Addition", Time.addition, "Time.addition");
 	
-	ReductionManager.addReducer("Time.Gregorian.GetYear",              Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetMonth",             Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetMonthNumber",       Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetDay",               Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetWeekDay",           Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetHour",              Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetMinute",            Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetSecond",            Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetMillisecond",       Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.GetTimeZoneOffset",    Time.getComponent);
-	ReductionManager.addReducer("Time.Gregorian.InDaylightSavingTime", Time.getComponent);
+	ReductionManager.addReducer("Time.Gregorian.GetYear",              Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetMonth",             Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetMonthNumber",       Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetDay",               Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetWeekDay",           Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetHour",              Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetMinute",            Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetSecond",            Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetMillisecond",       Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.GetTimeZoneOffset",    Time.getComponent, "Time.getComponent");
+	ReductionManager.addReducer("Time.Gregorian.InDaylightSavingTime", Time.getComponent, "Time.getComponent");
 	
-	ReductionManager.addReducer("Localization.Format.Time.Gregorian.FormatTime", Time.formatTime);
+	ReductionManager.addReducer("Localization.Format.Time.Gregorian.FormatTime", Time.formatTime, "Time.formatTime");
 	
-	ReductionManager.addReducer("Math.Arithmetic.ToNumber", Time.toNumber);
-	//ReductionManager.addReducer("Time.ToTime",              Time.toTime);
+	ReductionManager.addReducer("Math.Arithmetic.ToNumber", Time.toNumber, "Time.toNumber");
+	//ReductionManager.addReducer("Time.ToTime",              Time.toTime, "Time.toTime");
 	
-	ReductionManager.addReducer("Time.Timer", Time.timer, { special: true });
+	ReductionManager.addReducer("Time.Timer", Time.timer, "Time.timer", { special: true });
 };
