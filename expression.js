@@ -70,7 +70,7 @@ Time.Time = class extends Expression.NullaryExpression {
 		// let ss = time.getSeconds();
 		// let ms = time.getMilliseconds();
 		
-		let components = FormulaeTime.getComponents(millis, Formulae.timeZone);
+		let components = Time.common.getComponents(millis, Formulae.timeZone);
 		let yy = components.year;
 		let hh = components.hour;
 		let mm = components.minute;
@@ -101,12 +101,12 @@ Time.Time = class extends Expression.NullaryExpression {
 		}
 		
 		/*
-		let januaryComponents = FormulaeTime.getComponents(
-			FormulaeTime.createMillis(components.year, 1, 1, 0, 0, 0, 0, Formulae.timeZone, 0),
+		let januaryComponents = Time.common.getComponents(
+			Time.common.createMillis(components.year, 1, 1, 0, 0, 0, 0, Formulae.timeZone),
 			Formulae.timeZone
 		);
-		let juneComponents = FormulaeTime.getComponents(
-			FormulaeTime.createMillis(components.year, 7, 1, 0, 0, 0, 0, Formulae.timeZone, 0),
+		let juneComponents = Time.common.getComponents(
+			Time.common.createMillis(components.year, 7, 1, 0, 0, 0, 0, Formulae.timeZone),
 			Formulae.timeZone
 		);
 		let inDST = Math.min(januaryComponents.offset, juneComponents.offset) !== components.offset;
@@ -114,7 +114,7 @@ Time.Time = class extends Expression.NullaryExpression {
 		
 		let str = time.toLocaleString(Formulae.locale, options);
 		//if (inDST) str += "☀️";
-		if (FormulaeTime.inDaylightSavingTime(time, Formulae.timeZone)) str += "☀";
+		if (Time.common.inDaylightSavingTime(time, Formulae.timeZone)) str += "☀";
 		
 		return str;
 	}
@@ -177,13 +177,13 @@ Time.Time = class extends Expression.NullaryExpression {
 };
 
 Time.Month = class extends Expression.LabelExpression {
-	getTag()   { return "Time.Gregorian.Month." + FormulaeTime.monthTags[this.pos]; }
+	getTag()   { return "Time.Gregorian.Month." + Time.common.monthTags[this.pos]; }
 	getLabel() { return Time.messages.labelsMonth[this.pos]; }
 	getName()  { return "The " + Time.messages.labelsMonth[this.pos] + " month"; }
 };
 
 Time.WeekDay = class extends Expression.LabelExpression {
-	getTag()   { return "Time.Gregorian.WeekDay." + FormulaeTime.weekDayTags[this.pos]; }
+	getTag()   { return "Time.Gregorian.WeekDay." + Time.common.weekDayTags[this.pos]; }
 	getLabel() { return Time.messages.labelsWeekDay[this.pos]; }
 	getName()  { return "The " + Time.messages.labelsWeekDay[this.pos] + " weekday"; }
 };
@@ -229,8 +229,8 @@ Time.setExpressions = function(module) {
 	}));
 	
 	// gregorian functions
-	for (let i = 0; i < 12; ++i) Formulae.setExpression(module, "Time.Gregorian.Month." +    FormulaeTime.monthTags[i],    { clazz: Time.Month,    pos: i });
-	for (let i = 0; i <  7; ++i) Formulae.setExpression(module, "Time.Gregorian.WeekDay." +  FormulaeTime.weekDayTags[i],  { clazz: Time.WeekDay,  pos: i });
+	for (let i = 0; i < 12; ++i) Formulae.setExpression(module, "Time.Gregorian.Month." +   Time.common.monthTags[i],    { clazz: Time.Month,    pos: i });
+	for (let i = 0; i <  7; ++i) Formulae.setExpression(module, "Time.Gregorian.WeekDay." + Time.common.weekDayTags[i],  { clazz: Time.WeekDay,  pos: i });
 	
 	// time information function
 	[

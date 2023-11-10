@@ -68,7 +68,7 @@ Time.prepareTimeForm = function() {
 		
 		tr2.appendChild(td2 = document.createElement("td"));
 		td2.appendChild(control = document.createElement("select")); control.size = 1; control.id = "mo";
-		for (let i = 0, n = FormulaeTime.monthTags.length; i < n; ++i) {
+		for (let i = 0, n = Time.common.monthTags.length; i < n; ++i) {
 			option = document.createElement("option");
 			option.appendChild(document.createTextNode(Time.messages.labelsMonth[i]));
 			control.appendChild(option);
@@ -105,7 +105,7 @@ Time.prepareTimeForm = function() {
 		td.appendChild(table2);
 		
 		// offset
-		
+		/*
 		table.appendChild(tr = document.createElement("tr"));
 		tr.appendChild(td = document.createElement("td")); td.textContent = Time.messages.labelTime;
 		td = document.createElement("td"); tr.appendChild(td);
@@ -122,6 +122,7 @@ Time.prepareTimeForm = function() {
 		control = document.createElement("input"); control.type="text"; control.size = 2; control.id = "os"; td2.appendChild(control);
 		
 		td.appendChild(table2);
+		*/
 		
 		// footer
 		
@@ -134,7 +135,7 @@ Time.prepareTimeForm = function() {
 		ok.addEventListener("click", () => {
 			let time;
 			try {
-				time = FormulaeTime.createMillis(
+				time = Time.common.createMillis(
 					document.getElementById("yy").value,
 					document.getElementById("mo").selectedIndex + 1,
 					document.getElementById("dd").value,
@@ -142,8 +143,8 @@ Time.prepareTimeForm = function() {
 					document.getElementById("mi").value,
 					document.getElementById("ss").value,
 					document.getElementById("ms").value,
-					document.getElementById("tz").value,
-					document.getElementById("os").value * 1000 * 60
+					document.getElementById("tz").value
+					// document.getElementById("os").value * 1000 * 60
 				);
 			}
 			catch (error) {
@@ -169,7 +170,7 @@ Time.prepareTimeForm = function() {
 	Formulae.modalContent.appendChild(Time.timeForm);
 	
 	let time = Time.timeExpression == null ?  new Date() : new Date(Time.timeExpression.get("Value"));
-	let comp = FormulaeTime.getComponents(time.valueOf(), Formulae.timeZone);
+	let comp = Time.common.getComponents(time.valueOf(), Formulae.timeZone);
 	
 	document.getElementById("yy").value = comp.year;
 	document.getElementById("mo").selectedIndex = comp.month - 1;
@@ -178,7 +179,7 @@ Time.prepareTimeForm = function() {
 	document.getElementById("mi").value = comp.minute;
 	document.getElementById("ss").value = comp.second;
 	document.getElementById("ms").value = comp.millisecond;
-	document.getElementById("os").value = new Date().getTimezoneOffset();
+	//document.getElementById("os").value = new Date().getTimezoneOffset();
 	
 	//document.getElementById("yy").value = time.getFullYear();
 	//document.getElementById("mo").selectedIndex = time.getMonth();
@@ -218,14 +219,14 @@ Time.setEditions = function() {
 	
 	for (let i = 0; i < 12; ++i) Formulae.addEdition(
 		Time.messages.pathMonth, null, Time.messages.labelsMonth[i],
-		() => Expression.replacingEdition("Time.Gregorian.Month." + FormulaeTime.monthTags[i])
+		() => Expression.replacingEdition("Time.Gregorian.Month." + Time.common.monthTags[i])
 	);
 	
 	{
 		let offset = Time.messages.weekStartsAt;
 		for (let i = 0; i < 7; ++i) Formulae.addEdition(
 			Time.messages.pathWeekDay, null, Time.messages.labelsWeekDay[(i + offset) % 7],
-			() => Expression.replacingEdition("Time.Gregorian.WeekDay." + FormulaeTime.weekDayTags[(i + offset) % 7])
+			() => Expression.replacingEdition("Time.Gregorian.WeekDay." + Time.common.weekDayTags[(i + offset) % 7])
 		);
 	}
 	

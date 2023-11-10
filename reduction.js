@@ -36,7 +36,7 @@ Time.createTime = async (createTime, session) => {
 	{
 		let tag = createTime.children[1].getTag();
 		if (tag.startsWith("Time.Gregorian.Month.")) {
-			month = FormulaeTime.mapMonthTags[tag.substring(21)];
+			month = Time.common.mapMonthTags[tag.substring(21)];
 		}
 		else {
 			month = CanonicalArithmetic.getInteger(createTime.children[1]);
@@ -73,7 +73,7 @@ Time.createTime = async (createTime, session) => {
 	
 	let result = Formulae.createExpression("Time.Time");
 	try {
-		result.set("Value", FormulaeTime.createMillis(year, month, day, hour, minute, second, milliSecond, Formulae.timeZone, 0));
+		result.set("Value", Time.common.createMillis(year, month, day, hour, minute, second, milliSecond, Formulae.timeZone));
 	}
 	catch (error) {
 		ReductionManager.setInError(createTime, error);
@@ -95,7 +95,7 @@ Time.createTimeInTimeZone = async (createTime, session) => {
 	{
 		let tag = createTime.children[2].getTag();
 		if (tag.startsWith("Time.Gregorian.Month.")) {
-			month = FormulaeTime.mapMonthTags[tag.substring(21)];
+			month = Time.common.mapMonthTags[tag.substring(21)];
 		}
 		else {
 			month = CanonicalArithmetic.getInteger(createTime.children[2]);
@@ -132,7 +132,7 @@ Time.createTimeInTimeZone = async (createTime, session) => {
 	
 	let result = Formulae.createExpression("Time.Time");
 	try {
-		result.set("Value", FormulaeTime.createMillis(year, month, day, hour, minute, second, milliSecond, timeZone.get("Value"), 0));
+		result.set("Value", Time.common.createMillis(year, month, day, hour, minute, second, milliSecond, timeZone.get("Value")));
 	}
 	catch (error) {
 		ReductionManager.setInError(createTime, error);
@@ -189,7 +189,7 @@ Time.getComponent = async (getComponent, session) => {
 	}
 	
 	let millis = timeExpression.get("Value");
-	let components = FormulaeTime.getComponents(millis, timeZone);
+	let components = Time.common.getComponents(millis, timeZone);
 	let result;
 	
 	switch (getComponent.getTag()) {
@@ -198,7 +198,7 @@ Time.getComponent = async (getComponent, session) => {
 			break;
 		
 		case "Time.Gregorian.GetMonth":
-			result = Formulae.createExpression("Time.Gregorian.Month." + FormulaeTime.monthTags[components.month - 1]);
+			result = Formulae.createExpression("Time.Gregorian.Month." + Time.common.monthTags[components.month - 1]);
 			break;
 		
 		case "Time.Gregorian.GetMonthNumber":
@@ -210,7 +210,7 @@ Time.getComponent = async (getComponent, session) => {
 			break;
 		
 		case "Time.Gregorian.GetWeekDay":
-			result = Formulae.createExpression("Time.Gregorian.WeekDay." + FormulaeTime.weekDayTags[components.weekDay]);
+			result = Formulae.createExpression("Time.Gregorian.WeekDay." + Time.common.weekDayTags[components.weekDay]);
 			break;
 			
 		case "Time.Gregorian.GetHour":
@@ -235,7 +235,7 @@ Time.getComponent = async (getComponent, session) => {
 		
 		case "Time.Gregorian.InDaylightSavingTime":
 			result = Formulae.createExpression(
-				FormulaeTime.inDaylightSavingTime(millis, timeZone) ?
+				Time.common.inDaylightSavingTime(millis, timeZone) ?
 				"Logic.True" :
 				"Logic.False"
 			);
