@@ -24,7 +24,7 @@ Take a look at this [tutorial](https://formulae.org/?script=tutorials/Complex) t
    * Month as a number
    * Day of the month
    * Weekday
-   * Hour, in 24 hours format
+   * Hour of the day, in 24-hour format
    * Minute
    * Second
    * Millisecond
@@ -32,5 +32,5 @@ Take a look at this [tutorial](https://formulae.org/?script=tutorials/Complex) t
    * Whether or not the time is in daylight saving time. It always retrieves false if the current or given time zone does not observe dayling saving time
 * Formatting a time expression (as a string)
     * In the current or given locale
-    * In the current or given timezone
-* Conversion from/to an integer number (the Epoch)
+    * In the current or given time zone
+* Conversion from/to an integer number (the epoch)
