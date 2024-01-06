@@ -16,9 +16,9 @@ Take a look at this [tutorial](https://formulae.org/?script=tutorials/Complex) t
 
 * Time expressions with precision of a millisecond
 * Friendly visualization of a time
-* Interactive creation of time expressions including the timezone
-* Programatic creation of time (in current or provided timezone)
-* Retrieving a component of a time (in current or provided timezone)
+* Interactive creation of time expressions including the time zone
+* Programatic creation of time (in current or given time zone)
+* Retrieving a component of a time (in current or given time zone)
    * Year (BC as negatives)
    * Month as a symbol
    * Month as a number
@@ -28,8 +28,8 @@ Take a look at this [tutorial](https://formulae.org/?script=tutorials/Complex) t
    * Minute
    * Second
    * Millisecond
-   * Timezone offset
-   * Whether or not the time is in daylight saving time
+   * Time zone offset, in minutes. It always retrieves 0 if the current or given time zone does not observe dayling saving time
+   * Whether or not the time is in daylight saving time. It always retrieves false if the current or given time zone does not observe dayling saving time
 * Formatting a time expression (as a string)
     * In the current or given locale
     * In the current or given timezone
