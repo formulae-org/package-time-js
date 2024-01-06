@@ -33,3 +33,4 @@ Take a look at this [tutorial](https://formulae.org/?script=tutorials/Complex) t
 * Formatting a time expression (as a string)
     * In the current or given locale
     * In the current or given timezone
+* Conversion from/to an integer number (the Epoch)
