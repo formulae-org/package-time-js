@@ -18,7 +18,7 @@ Take a look at this [tutorial](https://formulae.org/?script=tutorials/Complex) t
 * Friendly visualization of a time
 * Interactive creation of time expressions including the time zone
 * Programatic creation of time (in current or given time zone)
-* Both interactive and programmatic creation of a time expression works in lenient mode
+* Both interactive and programmatic creation of a time expression works in lenient parsing
 * Retrieving a component of a time (in current or given time zone)
    * Year (BC as negatives)
    * Month as a symbol
