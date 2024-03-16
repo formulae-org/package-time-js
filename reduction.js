@@ -166,12 +166,13 @@ Time.compare = async (compare, session) => {
 
 Time.addition = async (offset, session) => {
 	if (offset.children.length !== 2) return false;
-	if (offset.children[0].getTag() !== "Time.Time") return false;
-	let o = CanonicalArithmetic.getInteger(offset.children[1]);
+	
+	if (offset.children[1].getTag() !== "Time.Time") return false;
+	let o = CanonicalArithmetic.getInteger(offset.children[0]);
 	if (o === undefined) return false;
 	
 	let result = Formulae.createExpression("Time.Time");
-	result.set("Value", offset.children[0].get("Value") + o);
+	result.set("Value", offset.children[1].get("Value") + o);
 	
 	offset.replaceBy(result);
 	return true;
@@ -194,7 +195,11 @@ Time.getComponent = async (getComponent, session) => {
 	
 	switch (getComponent.getTag()) {
 		case "Time.Gregorian.GetYear":
-			result = CanonicalArithmetic.number2Expr(components.year);
+			result = CanonicalArithmetic.canonical2InternalNumber(
+				new CanonicalArithmetic.Integer(
+					BigInt(components.year)
+				)
+			);
 			break;
 		
 		case "Time.Gregorian.GetMonth":
@@ -202,11 +207,19 @@ Time.getComponent = async (getComponent, session) => {
 			break;
 		
 		case "Time.Gregorian.GetMonthNumber":
-			result = CanonicalArithmetic.number2Expr(components.month);
+			result = CanonicalArithmetic.canonical2InternalNumber(
+				new CanonicalArithmetic.Integer(
+					BigInt(components.month)
+				)
+			) 
 			break;
 		
 		case "Time.Gregorian.GetDay":
-			result = CanonicalArithmetic.number2Expr(components.day);
+			result = CanonicalArithmetic.canonical2InternalNumber(
+				new CanonicalArithmetic.Integer(
+					BigInt(components.day)
+				)
+			);
 			break;
 		
 		case "Time.Gregorian.GetWeekDay":
@@ -214,23 +227,43 @@ Time.getComponent = async (getComponent, session) => {
 			break;
 			
 		case "Time.Gregorian.GetHour":
-			result = CanonicalArithmetic.number2Expr(components.hour);
+			result = CanonicalArithmetic.canonical2InternalNumber(
+				new CanonicalArithmetic.Integer(
+					BigInt(components.hour)
+				)
+			);
 			break;
 			
 		case "Time.Gregorian.GetMinute":
-			result = CanonicalArithmetic.number2Expr(components.minute);
+			result = CanonicalArithmetic.canonical2InternalNumber(
+				new CanonicalArithmetic.Integer(
+					BigInt(components.minute)
+				)
+			);
 			break;
 		
 		case "Time.Gregorian.GetSecond":
-			result = CanonicalArithmetic.number2Expr(components.second);
+			result = CanonicalArithmetic.canonical2InternalNumber(
+				new CanonicalArithmetic.Integer(
+					BigInt(components.second)
+				)
+			);
 			break;
 		
 		case "Time.Gregorian.GetMillisecond":
-			result = CanonicalArithmetic.number2Expr(components.millisecond);
+			result = CanonicalArithmetic.canonical2InternalNumber(
+				new CanonicalArithmetic.Integer(
+					BigInt(components.millisecond)
+				)
+			);
 			break;
 			
 		case "Time.Gregorian.GetTimeZoneOffset":
-			result = CanonicalArithmetic.number2Expr(components.offset);
+			result = CanonicalArithmetic.canonical2InternalNumber(
+				new CanonicalArithmetic.Integer(
+					BigInt(components.offset)
+				)
+			);
 			break;
 		
 		case "Time.Gregorian.InDaylightSavingTime":
@@ -365,13 +398,18 @@ Time.formatTime = async (formatTime, session) => {
 	return true;
 };
 
-
 Time.toNumber = async (toNumber, session) => {
 	if (toNumber.children[0].getTag() !== "Time.Time") return false;
 	if (toNumber.children.lengh > 1) return false;
 	
-	let result = CanonicalArithmetic.number2Expr(toNumber.children[0].get("Value"));
-	toNumber.replaceBy(result);
+	toNumber.replaceBy(
+		CanonicalArithmetic.canonical2InternalNumber(
+			new CanonicalArithmetic.Integer(
+				toNumber.children[0].get("Value")
+			)
+		)
+	);
+	
 	return true;
 };
 
@@ -394,7 +432,11 @@ Time.timer = async (timer, session) => {
 	let end = Date.now();
 	
 	let result = Formulae.createExpression("List.List");
-	result.addChild(CanonicalArithmetic.number2Expr(end - start));
+	result.addChild(
+		CanonicalArithmetic.canonical2InternalNumber(
+			new CanonicalArithmetic.Integer(BigInt(end - start))
+		)
+	);
 	result.addChild(timer.children[0]);
 	
 	timer.replaceBy(result);
