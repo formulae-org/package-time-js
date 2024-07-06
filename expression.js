@@ -127,16 +127,16 @@ Time.Time = class extends Expression.NullaryExpression {
 		super.get(name);
 	}
 	
-	setSerializationStrings(strings, promises) {
-		this.set("Value", parseInt(strings[0]));
-	}
-	
 	getSerializationNames() {
 		return [ "Value" ];
 	}
 	
-	getSerializationStrings() {
+	async getSerializationStrings() {
 		return [ this.millis ];
+	}
+	
+	setSerializationStrings(strings, promises) {
+		this.set("Value", parseInt(strings[0]));
 	}
 	
 	restart() {
