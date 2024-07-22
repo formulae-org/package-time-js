@@ -282,13 +282,13 @@ Time.getComponent = async (getComponent, session) => {
 Time.FormatOptions = class extends CanonicalOptions {
 	constructor() {
 		super();
-		this.locale = Formulae.locale;
-		this.timeZone = Formulae.timeZone;
+		this.locale    = Formulae.locale;
+		this.timeZone  = Formulae.timeZone;
 		this.dateStyle = "full";
 		this.timeStyle = "full";
 	}
 	
-	checkOption(tag, option) {
+	checkOption(expression, option) {
 		let name = option.children[0].get("Value").toLowerCase();
 		let value = option.children[1];
 		
@@ -303,7 +303,7 @@ Time.FormatOptions = class extends CanonicalOptions {
 				return true;
 			}
 			
-			case "timezone": {
+			case "time zone": {
 				if (value.getTag() !== "String.String") {
 					ReductionManager.setInError(value, "Value must be a string");
 					return false;
@@ -313,7 +313,7 @@ Time.FormatOptions = class extends CanonicalOptions {
 				return true;
 			}
 			
-			case "datestyle": {
+			case "date style": {
 				if (value.getTag() !== "String.String") {
 					ReductionManager.setInError(value, "Value is not a string");
 					return false;
@@ -336,7 +336,7 @@ Time.FormatOptions = class extends CanonicalOptions {
 				}
 			}
 			
-			case "timestyle": {
+			case "time style": {
 				if (value.getTag() !== "String.String") {
 					ReductionManager.setInError(value, "Value is not a string");
 					return false;
@@ -366,16 +366,13 @@ Time.FormatOptions = class extends CanonicalOptions {
 }
 
 Time.formatTime = async (formatTime, session) => {
-	let tag = formatTime.getTag();
-	
 	let timeExpression = formatTime.children[0];
 	if (timeExpression.getTag() !== "Time.Time") return false;
 	
 	let optionsExpr = formatTime.children[1];
 	let formatOptions = new Time.FormatOptions();
-	if (optionsExpr !== undefined && !formatOptions.checkOptions(tag, optionsExpr)) {
-		return false;
-	}	
+	
+	formatOptions.checkOptions(formatTime, optionsExpr);
 	
 	let options = {	timeZone: formatOptions.timeZone };
 	if (formatOptions.dateStyle !== "none") options.dateStyle = formatOptions.dateStyle;
