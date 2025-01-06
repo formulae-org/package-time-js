@@ -196,7 +196,8 @@ Time.getComponent = async (getComponent, session) => {
 	switch (getComponent.getTag()) {
 		case "Time.Gregorian.GetYear":
 			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.year, session)
+				CanonicalArithmetic.createInteger(components.year, session),
+				session
 			);
 			break;
 		
@@ -206,13 +207,15 @@ Time.getComponent = async (getComponent, session) => {
 		
 		case "Time.Gregorian.GetMonthNumber":
 			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.month, session)
+				CanonicalArithmetic.createInteger(components.month, session),
+				session
 			) 
 			break;
 		
 		case "Time.Gregorian.GetDay":
 			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.day, session)
+				CanonicalArithmetic.createInteger(components.day, session),
+				session
 			);
 			break;
 		
@@ -222,31 +225,36 @@ Time.getComponent = async (getComponent, session) => {
 			
 		case "Time.Gregorian.GetHour":
 			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.hour, session)
+				CanonicalArithmetic.createInteger(components.hour, session),
+				session
 			);
 			break;
 			
 		case "Time.Gregorian.GetMinute":
 			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.minute, session)
+				CanonicalArithmetic.createInteger(components.minute, session),
+				session
 			);
 			break;
 		
 		case "Time.Gregorian.GetSecond":
 			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.second, session)
+				CanonicalArithmetic.createInteger(components.second, session),
+				session
 			);
 			break;
 		
 		case "Time.Gregorian.GetMillisecond":
 			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.millisecond, session)
+				CanonicalArithmetic.createInteger(components.millisecond, session),
+				session
 			);
 			break;
 			
 		case "Time.Gregorian.GetTimeZoneOffset":
 			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.offset, session)
+				CanonicalArithmetic.createInteger(components.offset, session),
+				session
 			);
 			break;
 		
@@ -385,7 +393,8 @@ Time.toNumber = async (toNumber, session) => {
 	
 	toNumber.replaceBy(
 		CanonicalArithmetic.createInternalNumber(
-			CanonicalArithmetic.createInteger(toNumber.children[0].get("Value"), session)
+			CanonicalArithmetic.createInteger(toNumber.children[0].get("Value"), session),
+			session
 		)
 	);
 	
@@ -413,7 +422,8 @@ Time.timer = async (timer, session) => {
 	let result = Formulae.createExpression("List.List");
 	result.addChild(
 		CanonicalArithmetic.createInternalNumber(
-			CanonicalArithmetic.createInteger(end - start, session)
+			CanonicalArithmetic.createInteger(end - start, session),
+			session
 		)
 	);
 	result.addChild(timer.children[0]);
