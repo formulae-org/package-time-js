@@ -29,7 +29,7 @@ Time.getCurrentTime = async (getCurrentTime, session) => {
 };
 
 Time.createTime = async (createTime, session) => {
-	let year = CanonicalArithmetic.getNativeInteger(createTime.children[0]);
+	let year = Arithmetic.getNativeInteger(createTime.children[0]);
 	if (year === undefined) { return false; }
 	
 	let month;
@@ -39,35 +39,35 @@ Time.createTime = async (createTime, session) => {
 			month = Time.common.mapMonthTags[tag.substring(21)];
 		}
 		else {
-			month = CanonicalArithmetic.getNativeInteger(createTime.children[1]);
+			month = Arithmetic.getNativeInteger(createTime.children[1]);
 		if (month === undefined) { return false; }
 		}
 	}
 	
-	let day = CanonicalArithmetic.getNativeInteger(createTime.children[2]);
+	let day = Arithmetic.getNativeInteger(createTime.children[2]);
 	if (day === undefined) { return false; }
 	
 	let hour = 0;
 	if (createTime.children.length >= 4) {
-		hour = CanonicalArithmetic.getNativeInteger(createTime.children[3]);
+		hour = Arithmetic.getNativeInteger(createTime.children[3]);
 		if (hour === undefined) { return false; }
 	}
 	
 	let minute = 0;
 	if (createTime.children.length >= 5) {
-		minute = CanonicalArithmetic.getNativeInteger(createTime.children[4]);
+		minute = Arithmetic.getNativeInteger(createTime.children[4]);
 		if (minute === undefined) { return false; }
 	}
 	
 	let second = 0;
 	if (createTime.children.length >= 6) {
-		second = CanonicalArithmetic.getNativeInteger(createTime.children[5]);
+		second = Arithmetic.getNativeInteger(createTime.children[5]);
 		if (second === undefined) { return false; }
 	}
 	
 	let milliSecond = 0;
 	if (createTime.children.length >= 7) {
-		milliSecond = CanonicalArithmetic.getNativeInteger(createTime.children[6]);
+		milliSecond = Arithmetic.getNativeInteger(createTime.children[6]);
 		if (milliSecond === undefined) { return false; }
 	}
 	
@@ -88,7 +88,7 @@ Time.createTimeInTimeZone = async (createTime, session) => {
 	let timeZone = createTime.children[0];
 	if (timeZone.getTag() !== "String.String") return false;
 	
-	let year = CanonicalArithmetic.getNativeInteger(createTime.children[1]);
+	let year = Arithmetic.getNativeInteger(createTime.children[1]);
 	if (year === undefined) { return false; }
 	
 	let month;
@@ -98,35 +98,35 @@ Time.createTimeInTimeZone = async (createTime, session) => {
 			month = Time.common.mapMonthTags[tag.substring(21)];
 		}
 		else {
-			month = CanonicalArithmetic.getNativeInteger(createTime.children[2]);
+			month = Arithmetic.getNativeInteger(createTime.children[2]);
 		if (month === undefined) { return false; }
 		}
 	}
 	
-	let day = CanonicalArithmetic.getNativeInteger(createTime.children[3]);
+	let day = Arithmetic.getNativeInteger(createTime.children[3]);
 	if (day === undefined) { return false; }
 	
 	let hour = 0;
 	if (createTime.children.length >= 5) {
-		hour = CanonicalArithmetic.getNativeInteger(createTime.children[4]);
+		hour = Arithmetic.getNativeInteger(createTime.children[4]);
 		if (hour === undefined) { return false; }
 	}
 	
 	let minute = 0;
 	if (createTime.children.length >= 6) {
-		minute = CanonicalArithmetic.getNativeInteger(createTime.children[5]);
+		minute = Arithmetic.getNativeInteger(createTime.children[5]);
 		if (minute === undefined) { return false; }
 	}
 	
 	let second = 0;
 	if (createTime.children.length >= 7) {
-		second = CanonicalArithmetic.getNativeInteger(createTime.children[6]);
+		second = Arithmetic.getNativeInteger(createTime.children[6]);
 		if (second === undefined) { return false; }
 	}
 	
 	let milliSecond = 0;
 	if (createTime.children.length >= 8) {
-		milliSecond = CanonicalArithmetic.getNativeInteger(createTime.children[7]);
+		milliSecond = Arithmetic.getNativeInteger(createTime.children[7]);
 		if (milliSecond === undefined) { return false; }
 	}
 	
@@ -168,7 +168,7 @@ Time.addition = async (offset, session) => {
 	if (offset.children.length !== 2) return false;
 	
 	if (offset.children[1].getTag() !== "Time.Time") return false;
-	let o = CanonicalArithmetic.getInteger(offset.children[0]);
+	let o = Arithmetic.getInteger(offset.children[0]);
 	if (o === undefined) return false;
 	
 	let result = Formulae.createExpression("Time.Time");
@@ -195,8 +195,8 @@ Time.getComponent = async (getComponent, session) => {
 	
 	switch (getComponent.getTag()) {
 		case "Time.Gregorian.GetYear":
-			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.year, session),
+			result = Arithmetic.createInternalNumber(
+				Arithmetic.createInteger(components.year, session),
 				session
 			);
 			break;
@@ -206,15 +206,15 @@ Time.getComponent = async (getComponent, session) => {
 			break;
 		
 		case "Time.Gregorian.GetMonthNumber":
-			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.month, session),
+			result = Arithmetic.createInternalNumber(
+				Arithmetic.createInteger(components.month, session),
 				session
 			) 
 			break;
 		
 		case "Time.Gregorian.GetDay":
-			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.day, session),
+			result = Arithmetic.createInternalNumber(
+				Arithmetic.createInteger(components.day, session),
 				session
 			);
 			break;
@@ -224,36 +224,36 @@ Time.getComponent = async (getComponent, session) => {
 			break;
 			
 		case "Time.Gregorian.GetHour":
-			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.hour, session),
+			result = Arithmetic.createInternalNumber(
+				Arithmetic.createInteger(components.hour, session),
 				session
 			);
 			break;
 			
 		case "Time.Gregorian.GetMinute":
-			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.minute, session),
+			result = Arithmetic.createInternalNumber(
+				Arithmetic.createInteger(components.minute, session),
 				session
 			);
 			break;
 		
 		case "Time.Gregorian.GetSecond":
-			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.second, session),
+			result = Arithmetic.createInternalNumber(
+				Arithmetic.createInteger(components.second, session),
 				session
 			);
 			break;
 		
 		case "Time.Gregorian.GetMillisecond":
-			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.millisecond, session),
+			result = Arithmetic.createInternalNumber(
+				Arithmetic.createInteger(components.millisecond, session),
 				session
 			);
 			break;
 			
 		case "Time.Gregorian.GetTimeZoneOffset":
-			result = CanonicalArithmetic.createInternalNumber(
-				CanonicalArithmetic.createInteger(components.offset, session),
+			result = Arithmetic.createInternalNumber(
+				Arithmetic.createInteger(components.offset, session),
 				session
 			);
 			break;
@@ -392,8 +392,8 @@ Time.toNumber = async (toNumber, session) => {
 	if (toNumber.children.lengh > 1) return false;
 	
 	toNumber.replaceBy(
-		CanonicalArithmetic.createInternalNumber(
-			CanonicalArithmetic.createInteger(toNumber.children[0].get("Value"), session),
+		Arithmetic.createInternalNumber(
+			Arithmetic.createInteger(toNumber.children[0].get("Value"), session),
 			session
 		)
 	);
@@ -403,7 +403,7 @@ Time.toNumber = async (toNumber, session) => {
 
 /*
 Time.toTime = async (toTime, session) => {
-	CanonicalArithmetic.getInteger(createTime.children[4]);
+	Arithmetic.getInteger(createTime.children[4]);
 	if (millis === undefined) return false;
 	
 	let result = Formulae.createExpression("Time.Time");
@@ -421,8 +421,8 @@ Time.timer = async (timer, session) => {
 	
 	let result = Formulae.createExpression("List.List");
 	result.addChild(
-		CanonicalArithmetic.createInternalNumber(
-			CanonicalArithmetic.createInteger(end - start, session),
+		Arithmetic.createInternalNumber(
+			Arithmetic.createInteger(end - start, session),
 			session
 		)
 	);
