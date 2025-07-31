@@ -164,17 +164,19 @@ Time.compare = async (compare, session) => {
 	}
 };
 
-Time.addition = async (offset, session) => {
-	if (offset.children.length !== 2) return false;
+Time.addition = async (addition, session) => {
+	if (addition.children.length !== 2) return false;
 	
-	if (offset.children[1].getTag() !== "Time.Time") return false;
-	let o = Arithmetic.getInteger(offset.children[0]);
-	if (o === undefined) return false;
+	if (addition.children[1].getTag() !== "Time.Time") return false;
+	
+	//let offset = Arithmetic.getInteger(addition.children[0]);
+	let offset = Arithmetic.getNativeInteger(addition.children[0]);
+	if (offset === undefined) return false;
 	
 	let result = Formulae.createExpression("Time.Time");
-	result.set("Value", offset.children[1].get("Value") + o);
+	result.set("Value", addition.children[1].get("Value") + offset);
 	
-	offset.replaceBy(result);
+	addition.replaceBy(result);
 	return true;
 };
 
