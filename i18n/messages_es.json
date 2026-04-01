@@ -29,11 +29,11 @@
 
 	"nameCreateTime"     : "Creación de tiempo",
 	"mnemonicCreateTime" : "CrearTiempo",
-	"childrenCreateTime" : [ "Huso horario", "Año", "Mes", "Día", "Hora", "Minuto", "Seguno", "Milisegundo" ],
+	"childrenCreateTime" : [ "Huso horario", "Año", "Mes", "Día", "Hora", "Minuto", "Segundo", "Milisegundo" ],
 	"leafCreateTime"     : "Crear tiempo",
 
 	"nameCreateTimeInTimeZone"     : "Creación de tiempo en huso horario",
-	"mnemonicCreateTimeInTimeZone" : "CrearTiempoEnHusoHorarioe",
+	"mnemonicCreateTimeInTimeZone" : "CrearTiempoEnHusoHorario",
 	"leafCreateTimeInTimeZone"     : "Crear tiempo en huso horario",
 
 	"pathTimeGregorian" : "Tiempo.Calendario gregoriano",
