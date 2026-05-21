@@ -116,7 +116,7 @@ Common.getComponents = (millis, timeZone) => {
 	// console.log(str);
 	// example 'Tue, 09 26, 2023 AD, 24:35:14.517 GMT-06:00'
 	
-	let tokens = str.split(/[ ,:.]+/);
+	let tokens = str.split(/[ ,:./]+/);
 	
 	let year = Number(tokens[3]);
 	if (tokens[4] === "BC") year = -year;
