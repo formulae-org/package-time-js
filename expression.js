@@ -16,13 +16,13 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-'use strict';
+"use strict";
 
 export class Time extends Formulae.Package {}
 
 Time.Time = class extends Expression.NullaryExpression {
 	getTag() { return "Time.Time"; }
-
+	
 	getName() { return Time.messages.nameTime; }
 	
 	set(name, value) {
@@ -152,7 +152,7 @@ Time.Time = class extends Expression.NullaryExpression {
 				this.timeAsString = "Invalid time zone";
 			}
 		}
-	
+		
 		this.width = Math.ceil(context.measureText(this.timeAsString).width);
 		this.height = context.fontInfo.size;
 		this.vertBaseline = Math.round(this.width / 2);
