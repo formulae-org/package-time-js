@@ -201,7 +201,7 @@ Time.editionTime = function() {
 
 Time.actionTime = {
 	isAvailableNow: () => Formulae.sHandler.type != Formulae.ROW_OUTPUT,
-	getDescription: () => "Edit time...",
+	getDescription: () => Time.messages.actionEditTime,
 	doAction: () => {
 		Time.timeExpression = Formulae.sExpression;
 		Time.prepareTimeForm();
@@ -209,37 +209,41 @@ Time.actionTime = {
 }
 
 Time.setEditions = function() {
-	Formulae.addEdition(Time.messages.pathTime, null, Time.messages.leafTime, Time.editionTime);
-	
-	Formulae.addEdition(Time.messages.pathTime, null, Time.messages.leafGetCurrentTime,       () => Expression.replacingEdition("Time.GetCurrentTime"));
-	Formulae.addEdition(Time.messages.pathTime, null, Time.messages.leafCreateTime,           () => Expression.multipleEdition ("Time.CreateTime", 3, 0));
-	Formulae.addEdition(Time.messages.pathTime, null, Time.messages.leafCreateTimeInTimeZone, () => Expression.multipleEdition ("Time.CreateTimeInTimeZone", 4, 0));
-	Formulae.addEdition(Time.messages.pathTime, null, Time.messages.leafTimer,                () => Expression.wrapperEdition  ("Time.Timer"));
-	Formulae.addEdition(Time.messages.pathTime, null, Time.messages.leafToTime,               () => Expression.wrapperEdition  ("Time.ToTime"));
-	
+
+	// Time creation opens a modal form and builds a Time.Time whose appearance is the date itself (content-dependent), so — like arithmetic's Number — it is labeled with plain text
+	Formulae.addEdition(Time.messages.pathTime, Time.messages.leafTime, Time.messages.leafTime, Time.editionTime);
+
+	// GetCurrentTime is a replacing edition; it shows the produced nullary function itself
+	Formulae.addEdition(Time.messages.pathTime, '<expression tag="Time.GetCurrentTime"/>', Time.messages.leafGetCurrentTime,       () => Expression.replacingEdition("Time.GetCurrentTime"));
+	Formulae.addEdition(Time.messages.pathTime, Formulae.icon("Time.CreateTime", 3),                 Time.messages.leafCreateTime,           () => Expression.multipleEdition ("Time.CreateTime", 3, 0));
+	Formulae.addEdition(Time.messages.pathTime, Formulae.icon("Time.CreateTimeInTimeZone", 4),       Time.messages.leafCreateTimeInTimeZone, () => Expression.multipleEdition ("Time.CreateTimeInTimeZone", 4, 0));
+	Formulae.addEdition(Time.messages.pathTime, Formulae.icon("Time.Timer", 1),                      Time.messages.leafTimer,                () => Expression.wrapperEdition  ("Time.Timer"));
+	Formulae.addEdition(Time.messages.pathTime, Formulae.icon("Time.ToTime", 1),                     Time.messages.leafToTime,               () => Expression.wrapperEdition  ("Time.ToTime"));
+
+	// months and weekdays are replacing editions producing label expressions, so each shows the produced label itself
 	for (let i = 0; i < 12; ++i) Formulae.addEdition(
-		Time.messages.pathMonth, null, Time.messages.labelsMonth[i],
+		Time.messages.pathMonth, `<expression tag="Time.Gregorian.Month.${Time.common.monthTags[i]}"/>`, Time.messages.labelsMonth[i],
 		() => Expression.replacingEdition("Time.Gregorian.Month." + Time.common.monthTags[i])
 	);
-	
+
 	{
 		let offset = Time.messages.weekStartsAt;
 		for (let i = 0; i < 7; ++i) Formulae.addEdition(
-			Time.messages.pathWeekDay, null, Time.messages.labelsWeekDay[(i + offset) % 7],
+			Time.messages.pathWeekDay, `<expression tag="Time.Gregorian.WeekDay.${Time.common.weekDayTags[(i + offset) % 7]}"/>`, Time.messages.labelsWeekDay[(i + offset) % 7],
 			() => Expression.replacingEdition("Time.Gregorian.WeekDay." + Time.common.weekDayTags[(i + offset) % 7])
 		);
 	}
-	
+
 	[
 		"GetYear", "GetMonth",  "GetMonthNumber", "GetDay",         "GetWeekDay",
 		"GetHour", "GetMinute", "GetSecond",      "GetMillisecond", "GetTimeZoneOffset", "InDaylightSavingTime"
 	].forEach(tag => Formulae.addEdition(
-		Time.messages.pathTimeGregorian, null, Time.messages["leaf" + tag],
+		Time.messages.pathTimeGregorian, Formulae.icon("Time.Gregorian." + tag, 1), Time.messages["leaf" + tag],
 		() => Expression.wrapperEdition("Time.Gregorian." + tag)
 	));
-	
+
 	[ "MonthName", "WeekDayName", "FormatTime" ].forEach(tag => Formulae.addEdition(
-		Time.messages.pathFormatTime, null, Time.messages["leaf" + tag],
+		Time.messages.pathFormatTime, Formulae.icon("Localization.Format.Time.Gregorian." + tag, 1), Time.messages["leaf" + tag],
 		() => Expression.wrapperEdition("Localization.Format.Time.Gregorian." + tag)
 	));
 };

@@ -108,5 +108,7 @@
 
 	"mnemonicFormatTime" : "FormatTime",
 	"nameFormatTime"     : "Format a time",
-	"leafFormatTime"     : "Format time"
+	"leafFormatTime"     : "Format time",
+
+	"actionEditTime" : "Edit time..."
 }
