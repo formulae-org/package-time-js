@@ -59,16 +59,8 @@ Common.createMillis = (year, month, day, hour, minute, second, millisecond, time
 	let originalYear = year < 1500 ? year : null;
 	if (originalYear != null) year = 1500;
 	
-	let date = new Date();
-	date.setUTCFullYear(year);
-	date.setUTCMonth(month - 1);
-	date.setUTCDate(day);
-	date.setUTCHours(hour);
-	date.setUTCMinutes(minute);
-	date.setUTCSeconds(second);
-	date.setUTCMilliseconds(millisecond);
-	date.setUTCFullYear(year);
-	
+	let date = new Date(Date.UTC(year, month - 1, day, hour, minute, second, millisecond));
+
 	let utcDate = new Date(date.toLocaleString("en-US", { timeZone: "UTC" }));
 	let tzDate;
 	try {
@@ -81,7 +73,7 @@ Common.createMillis = (year, month, day, hour, minute, second, millisecond, time
 	let offset  = utcDate.getTime() - tzDate.getTime();
 	
 	if (originalYear !== null) {
-		date = new Date(date.setUTCFullYear(originalYear));
+		date.setUTCFullYear(originalYear + (date.getUTCFullYear() - 1500));
 	}
 	
 	return date.getTime() + offset;
